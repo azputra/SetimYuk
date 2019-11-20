@@ -1,0 +1,19 @@
+<%- include('./partial/head') %>
+<h1>Edit Here</h1>
+<div>
+    <form method="POST" action="">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" placeholder="<%=customer.firstName%>">
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" placeholder="<%=customer.lastName%>">
+
+        <label for="platNo">Plat No</label>
+        <input type="text" id="platNo" name="platNo" placeholder="<%=customer.platNo%>">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="<%=customer.email%>">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<%- include('./partial/foot') %>

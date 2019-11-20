@@ -1,0 +1,23 @@
+<%-include('./partial/head')%>
+
+<div>
+    <form method="POST" action="/customers/<%= customer.id %>/add-product">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" value="<%=customer.firstName%>" readonly>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" value="<%=customer.lastName%>" readonly>
+
+        <label for="email">email</label>
+        <input type="email" id="email" name="email" value="<%=customer.email%>" readonly>
+
+        Product: <select name="ProductId">
+            <% for(let i=0; i < products.length; i++) { %>
+            <option value="<%= products[i].id %>"> <%= products[i].nameProduct %> </option>
+            <% } %>
+        </select>
+        <input type="hidden" id="CustomerId" name="CustomerId" value="<%=customer.id%>">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<%- include('./partial/foot')%>
