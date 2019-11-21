@@ -1,0 +1,14 @@
+<%- include('./partial/head') %>
+<h1>Edit Here</h1>
+<div>
+    <form method="POST" action="">
+        <label for="nameProduct">Name Product</label>
+        <input type="text" id="nameProduct" name="nameProduct" placeholder="<%=product.nameProduct%>">
+
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" placeholder="<%=product.price%>">
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<%- include('./partial/foot') %>

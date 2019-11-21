@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/azputra/SetimYuk#readme",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "ejs": "^2.7.3",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-session-sequelize": "^2.1.0",
+    "nodemailer": "^6.3.1",
     "pg": "^7.12.1",
     "sequelize": "^5.21.2"
   }

@@ -1,0 +1,34 @@
+<%-include('./partial/head')%>
+<a href="/"><button>Logout</button></a>
+<div class="container">
+    <h1>Data Products</h1>
+    <br>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name Product</th>
+                <th scope="col">Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%  products.forEach(product =>{%>
+            <tr>
+                <td><%=product.id%></td>
+                <td><%=product.nameProduct%></td>
+                <td><%=product.price%></td>
+                <td><a href="/products/edit/<%=product.id%>"><button>edit</a></button>
+                    <a href="products/delete/<%=product.id%>"
+                        onclick="return confirm('Delete this product?')"><button>delete</button></a>
+                </td>
+            </tr>
+            <%})%>
+        </tbody>
+    </table>
+</div>
+
+<center><button><a href="/customers">Show Customers</a></button></center>
+<center><button><a href="/products/add">Add Product</a></button></center>
+
+<%- include('./partial/foot')%>

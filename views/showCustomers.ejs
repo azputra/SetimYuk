@@ -1,4 +1,5 @@
 <%- include('./partial/head') %>
+<a href="/"><button>Logout</button></a>
 <div class="container">
     <h1>Data Customers</h1>
     <br>
@@ -23,13 +24,11 @@
                 <td><%= customer.lastName%></td>
                 <td><%= customer.platNo%></td>
                 <td><%= customer.email%></td>
-                <!-- <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
-                        Product</button></td> -->
-                <td><a href="/customers/<%=customer.id%>/add-product">Add Product</a></td>
-                <td><a href="/customers/<%=customer.id%>/history">History</a></td>
-                <td><a href="/customers/edit/<%=customer.id%>">edit</a> |
+                <td><a href="/customers/<%=customer.id%>/add-product"><button>Add Product</button></a></td>
+                <td><a href="/customers/<%=customer.id%>/history"><button>History</button></a></td>
+                <td><a href="/customers/edit/<%=customer.id%>"><button>edit</a></button>
                     <a href="customers/delete/<%=customer.id%>"
-                        onclick="return confirm('Delete this customer?')">delete</a>
+                        onclick="return confirm('Delete this customer?')"><button>delete</button></a>
                 </td>
             </tr>
             <%})%>
@@ -37,42 +36,7 @@
     </table>
 </div>
 
-<!-- <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>This is a large modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="mapouter">
-    <div class="gmap_canvas"><iframe width="557" height="277" id="gmap_canvas"
-            src="https://maps.google.com/maps?q=hacktiv8&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-            scrolling="no" marginheight="0" marginwidth="0"></iframe><a
-            href="https://www.whatismyip-address.com">whatismyip-address.com</a></div>
-    <style>
-        .mapouter {
-            position: relative;
-            text-align: right;
-            height: 277px;
-            width: 557px;
-        }
+<center><button><a href="/products">Show Product</a></button></center>
+<center><button><a href="/customers/add">Add Customer</a></button></center>
 
-        .gmap_canvas {
-            overflow: hidden;
-            background: none !important;
-            height: 277px;
-            width: 557px;
-        }
-    </style>
-</div> -->
 <%- include('./partial/foot') %>

@@ -1,27 +1,93 @@
 "use strict"
 
+const emailSend = require('../helper/mailThanks')
+const checkPassword = require('../helper/checkPassword')
 const express = require('express')
 const routes = require('express').Router()
 
 //panggil model
 const Customer = require('../models').Customer
 const Product = require('../models').Product
+const LaundressCar = require('../models').LaundressCar
 const ProductCustomer = require('../models').ProductCustomer
 
 routes.use(express.json())
 routes.use(express.urlencoded({ extended: true }))
 
 
+
+// //=================SESSION & MIDDLEWARE========================
+// const loginMiddlewareSession = (req, res, next) => {
+
+//     if (req.session.laundree && req.session.laundree.id) {
+//         next()
+//     } else {
+//         res.redirect('/')
+//     }
+// }
+
+//=====================LAUNDRESS =============
+
+
+//LOGIN
 routes.get('/', (req, res) => {
     res.render('index')
 })
 
-//CUSTOMERS
+routes.post('/', (req, res) => {
+    // res.send(inputPass)
+    LaundressCar.findOne({
+        where: {
+            username: req.body.username,
+        }
+    })
+        .then((laundree) => {
+            let inputPass = checkPassword(req.body.password, laundree.password)
+            // res.send(inputPass)
+            if (!inputPass)
+                res.redirect('/')
+            else {
+                // res.send(laundree)
+                res.redirect('/customers')
+            }
+        })
+        .catch((err) => {
+            res.send(err.message)
+        });
+})
+
+//REGISTER
+routes.get('/laundress/register', (req, res) => {
+    res.render('register')
+})
+
+routes.post('/laundress/register', (req, res) => {
+    LaundressCar.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        password: req.body.password,
+    })
+        .then(() => {
+            LaundressCar.findOne({
+                where: {
+                    firstName: req.body.firstName
+                }
+            })
+                .then(() => {
+                    res.redirect('/')
+                })
+        }).catch((err) => {
+            res.send(err)
+        })
+})
+
+
+//================================CUSTOMERS============================
 //READ
 routes.get('/customers', (req, res) => {
     Customer.findAll()
         .then((customers) => {
-            // res.send(customers)
             res.render('showCustomers', { customers })
         }).catch((err) => {
             res.send(err.message)
@@ -50,7 +116,6 @@ routes.post('/customers/add', (req, res) => {
 routes.get('/customers/edit/:id', (req, res) => {
     Customer.findByPk(req.params.id)
         .then(customer => {
-            // res.send(customer)
             res.render('editCustomer', { customer })
         })
         .catch(err => {
@@ -75,7 +140,9 @@ routes.get('/customers/delete/:id', (req, res) => {
     Customer.destroy({
         where: { id: req.params.id }
     })
-        .then(() => { res.redirect("/customers") })
+        .then(() => {
+            res.redirect("/customers")
+        })
         .catch((err) => { res.send(err.message) })
 })
 
@@ -89,6 +156,8 @@ routes.get('/customers/:id/add-product', (req, res) => {
         })
     Customer.findByPk(checkId)
         .then(customer => {
+            // res.send(customer)
+            emailSend(customer.email)
             res.render("customerAddProducts", { customer, products })
         })
         .catch(err => {
@@ -109,51 +178,39 @@ routes.post('/customers/:id/add-product', (req, res) => {
 
 //CHECK CUST PRODUCT
 routes.get('/customers/:id/history', (req, res) => {
-    // Customer.findOne({
-    //     where: {
-    //         id: req.params.id
-    //     },
-    //     include: Product,
-    //     plain: false
-    // })
-    //     .then(dataCustomers => {
-    //         res.send(dataCustomers)
-    //         res.render('showProductCustomer', { dataCustomers })
-    //     })
-    //     .catch(err => { res.send(err) })
-    let cek = []
+    let customerArr = []
     Customer.findOne({
         where: {
             id: req.params.id
         }
     })
         .then(customer => {
-            // cek = customer
+            customerArr = customer
             return customer.getProducts()
         })
         .then(products => {
-
-            res.send(products)
-
+            res.render('customerHistory', { customerArr, products })
         })
         .catch(err => {
             res.send(err)
         })
 })
 
-//PRODUCT
+
+
+//========================PRODUCT==================================
 //READ
 routes.get('/products', (req, res) => {
     Product.findAll()
         .then((products) => {
-            // res.send(Products)
+            // res.send(products)
             res.render('showProducts', { products })
         }).catch((err) => {
             res.send(err.message)
         });
 })
 
-//CREATE
+//ADD
 routes.get('/products/add', (req, res) => {
     res.render('addProduct')
 })

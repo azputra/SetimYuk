@@ -2,7 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class Customer extends Model {
-
+    checkFullname() {
+      return `${this.firstName} ${this.lastName}`
+    }
   }
   Customer.init({
     firstName: DataTypes.STRING,
